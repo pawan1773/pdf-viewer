@@ -19,7 +19,7 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
     /* Initialize the AdobeDC View object */
     var adobeDCView = new AdobeDC.View({
         /* Pass your registered client id */
-        clientId: "7fecb25fee3e4ad49a7c4cfe2004f303",
+        clientId: "a1648e3fdc99492d88bb309c70832c4c",
         /* Pass the div id in which PDF should be rendered */
         divId: "adobe-dc-view",
     });
