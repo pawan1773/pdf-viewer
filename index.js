@@ -52,8 +52,8 @@ function listenForFileUpload(adobeDCView) {
             var filePromise = Promise.resolve(e.target.result);
             // Pass the filePromise and name of the file to the previewFile API
             adobeDCView.previewFile({
-                  content: {promise: filePromise},
-                  metaData: { fileName: files[0].name }
+                  content:{promise: filePromise},
+                  metaData:{ fileName: files[0].name }
              }, {embedMode: "FULL_WINDOW"})
         };
         reader.readAsArrayBuffer(files[0]);
