@@ -38,10 +38,15 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 	});
 	listenForFileUpload(adobeDCView);
 	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
-		
+		alert(event.type);
 		switch (event.type) {
 			case "PDF_VIEWER_OPEN":
-				ga('send', 'event', 'PDF_VIEWER_OPEN', event.data.fileName, 'pdf viewer open');
+			    alert("PDF_VIEWER_OPEN===>");
+				gtag('event', 'PDF_VIEWER_OPEN', {
+				  'event_label': 'PDF_VIEWER_OPEN'
+				});
+
+				//ga('send', 'event', 'PDF_VIEWER_OPEN', event.data.fileName, 'pdf viewer open');
 				break;
 			case "DOCUMENT_OPEN":
 				ga('send', 'event', 'DOCUMENT_OPEN', event.data.fileName, 'open document');
@@ -57,7 +62,7 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 				break;
 		}
 	}, {
-            enablePDFAnalytics: true,
+            enablePDFAnalytics: true
         });
 	adobeDCView.registerCallback(
 		AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
