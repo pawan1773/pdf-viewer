@@ -56,7 +56,9 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 				ga('send', 'event', 'TEXT_COPY', `${event.data.copiedText} of ${event.data.fileName}`, 'text copy');
 				break;
 		}
-	});
+	}, {
+            enablePDFAnalytics: true,
+        });
 	adobeDCView.registerCallback(
 		AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
 		function () {
