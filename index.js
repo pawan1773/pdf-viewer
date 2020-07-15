@@ -37,23 +37,13 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 		divId: "adobe-dc-view",
 	});
 	listenForFileUpload(adobeDCView);
-	adobeDCView.registerCallback(
-		AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
-		function () {
-
-			return new Promise((resolve, reject) => {
-
-				resolve({
-					code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-					data: profile
-				})
-			})
-		});
 	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
-		alert(event.type);
+		
 		switch (event.type) {
+			case "PDF_VIEWER_OPEN":
+				ga('send', 'event', 'PDF_VIEWER_OPEN', event.data.fileName, 'pdf viewer open');
+				break;
 			case "DOCUMENT_OPEN":
-				alert('DOCUMENT_OPEN');
 				ga('send', 'event', 'DOCUMENT_OPEN', event.data.fileName, 'open document');
 				break;
 			case 'PAGE_VIEW':
@@ -67,6 +57,17 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 				break;
 		}
 	});
+	adobeDCView.registerCallback(
+		AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
+		function () {
+			return new Promise((resolve, reject) => {
+				resolve({
+					code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+					data: profile
+				})
+			})
+		});
+		
 });
 
 function listenForFileUpload(adobeDCView) {
@@ -77,7 +78,6 @@ function listenForFileUpload(adobeDCView) {
 			var reader = new FileReader();
 			reader.onloadend = function (e) {
 				var filePromise = Promise.resolve(e.target.result);
-				// Pass the filePromise and name of the file to the previewFile API
 				adobeDCView.previewFile({
 					content: {
 						promise: filePromise
