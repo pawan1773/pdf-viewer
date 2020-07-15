@@ -47,7 +47,6 @@ function displayPdfInSizedContainerView() {
 		divId: "adobe-dc-sized-container",
 	});	
 	setFileToPreview(adobeDCView, viewerConfig);
-	trackPdfEvents(adobeDCView);
 };
 
 function displayPdfInLineView() {
@@ -60,7 +59,6 @@ function displayPdfInLineView() {
 		divId: "adobe-dc-in-line",
 	});	
 	setFileToPreview(adobeDCView, viewerConfig);
-	trackPdfEvents(adobeDCView);
 };
 
 function displayPdfInFullWindowView() {
