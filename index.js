@@ -40,25 +40,29 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
 		alert(event.type);
 		switch (event.type) {
-			case "PDF_VIEWER_OPEN":
-			    alert("PDF_VIEWER_OPEN===>");
-				gtag('event', 'PDF_VIEWER_OPEN', {
-				  'event_label': 'PDF_VIEWER_OPEN'
-				});
-
-				//ga('send', 'event', 'PDF_VIEWER_OPEN', event.data.fileName, 'pdf viewer open');
-				break;
 			case "DOCUMENT_OPEN":
-				ga('send', 'event', 'DOCUMENT_OPEN', event.data.fileName, 'open document');
+			    gtag('event', 'DOCUMENT_OPEN', {
+				  'event_label': 'DOCUMENT_OPEN'
+				});
+				//ga('send', 'event', 'DOCUMENT_OPEN', event.data.fileName, 'open document');
 				break;
 			case 'PAGE_VIEW':
-				ga('send', 'event', 'PAGE_VIEW', `${event.data.pageNumber} of ${event.data.fileName}`, 'view page');
+			    gtag('event', 'PAGE_VIEW', {
+				  'event_label': 'PAGE_VIEW'
+				});
+				//ga('send', 'event', 'PAGE_VIEW', `${event.data.pageNumber} of ${event.data.fileName}`, 'view page');
 				break;
 			case 'DOCUMENT_DOWNLOAD':
-				ga('send', 'event', 'DOCUMENT_DOWNLOAD', event.data.fileName, 'download document');
+			    gtag('event', 'DOCUMENT_DOWNLOAD', {
+				  'event_label': 'DOCUMENT_DOWNLOAD'
+				});
+				//ga('send', 'event', 'DOCUMENT_DOWNLOAD', event.data.fileName, 'download document');
 				break;
 			case 'TEXT_COPY':
-				ga('send', 'event', 'TEXT_COPY', `${event.data.copiedText} of ${event.data.fileName}`, 'text copy');
+			    gtag('event', 'TEXT_COPY', {
+				  'event_label': 'TEXT_COPY'
+				});
+				//ga('send', 'event', 'TEXT_COPY', `${event.data.copiedText} of ${event.data.fileName}`, 'text copy');
 				break;
 		}
 	}, {
