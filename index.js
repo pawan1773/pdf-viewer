@@ -1,73 +1,82 @@
-
-
-/*
-Copyright 2019 Adobe
-All Rights Reserved.
-NOTICE: Adobe permits you to use, modify, and distribute this file in
-accordance with the terms of the Adobe license agreement accompanying
-it. If you have received this file from a source other than Adobe,
-then your use, modification, or distribution of it requires the prior
-written permission of Adobe.
-*/
-
-/* Control the default view mode */
-const viewerConfig = {
-	/* Allowed possible values are "FIT_PAGE", "FIT_WIDTH" or "" */
-	"defaultViewMode": "FIT_PAGE",
-	"embedMode": "FULL_WINDOW",
-	"showLeftHandPanel":false	
-};
-
+/** To setup user profile */
 const profile = {
 	userProfile: {
-		name: 'topcoder',
-		firstName: 'topcoder',
-		lastName: 'topcoder',
-		email: 'topcoder@gmail.com',
+		name: 'Joginder Pawan',
+		firstName: 'Joginder',
+		lastName: 'Pawan',
+		email: 'joginder.pawan@gmail.com',
 	}
+}
+const CLIENT_ID = "a1648e3fdc99492d88bb309c70832c4c";
+
+var fileToRead = document.getElementById("file-picker");
+var files = '';
+fileToRead.addEventListener("change", function (event) {
+	files = fileToRead.files;
+	$('#upload-pdf-p').text('PDF uploaded. Please select desired view.').addClass('success-color');
+	$('.btn').removeClass('disabled');
+});
+
+/** To view PDF in FULL WINDOW view */
+$('#full-window-btn').click(function () {
+	displayPdfInFullWindowView();
+	$('#adobe-dc-full-window').show();
+	$('#adobe-dc-full-window').siblings().hide();
+});
+
+/** To view PDF in SIZED CONTAINER view */
+$('#sized-container-btn').click(function () {
+	displayPdfInSizedContainerView();
+	$('#adobe-dc-sized-container').show();
+	$('#adobe-dc-sized-container').siblings().hide();
+});
+
+/** To view PDF in IN LINE view */
+$('#in-line-btn').click(function () {
+	displayPdfInLineView();
+	$('#adobe-dc-in-line').show();
+	$('#adobe-dc-in-line').siblings().hide();
+});
+
+function displayPdfInSizedContainerView() {
+	const viewerConfig = {
+		"embedMode": "SIZED_CONTAINER"
+	};
+	var adobeDCView = new AdobeDC.View({
+		clientId: CLIENT_ID,
+		divId: "adobe-dc-sized-container",
+	});	
+	setFileToPreview(adobeDCView, viewerConfig);
+	trackPdfEvents(adobeDCView);
 };
 
-/* Wait for Adobe Document Cloud View SDK to be ready */
-document.addEventListener("adobe_dc_view_sdk.ready", function () {
-	/* Initialize the AdobeDC View object */
+function displayPdfInLineView() {
+	const viewerConfig = {
+		"defaultViewMode": "FIT_PAGE",
+		"embedMode": "IN_LINE"
+	};
 	var adobeDCView = new AdobeDC.View({
-		/* Pass your registered client id */
-		clientId: "a1648e3fdc99492d88bb309c70832c4c",
-		/* Pass the div id in which PDF should be rendered */
-		divId: "adobe-dc-view",
+		clientId: CLIENT_ID,
+		divId: "adobe-dc-in-line",
+	});	
+	setFileToPreview(adobeDCView, viewerConfig);
+	trackPdfEvents(adobeDCView);
+};
+
+function displayPdfInFullWindowView() {
+	const viewerConfig = {
+		"defaultViewMode": "FIT_PAGE",
+		"embedMode": "FULL_WINDOW",
+		"showLeftHandPanel": false
+	};
+	var adobeDCView = new AdobeDC.View({
+		clientId: CLIENT_ID,
+		divId: "adobe-dc-full-window",
 	});
-	listenForFileUpload(adobeDCView);
-	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
-		alert(event.type);
-		switch (event.type) {
-			case "DOCUMENT_OPEN":
-			    gtag('event', 'DOCUMENT_OPEN', {
-				  'event_label': 'DOCUMENT_OPEN'
-				});
-				//ga('send', 'event', 'DOCUMENT_OPEN', event.data.fileName, 'open document');
-				break;
-			case 'PAGE_VIEW':
-			    gtag('event', 'PAGE_VIEW', {
-				  'event_label': 'PAGE_VIEW'
-				});
-				//ga('send', 'event', 'PAGE_VIEW', `${event.data.pageNumber} of ${event.data.fileName}`, 'view page');
-				break;
-			case 'DOCUMENT_DOWNLOAD':
-			    gtag('event', 'DOCUMENT_DOWNLOAD', {
-				  'event_label': 'DOCUMENT_DOWNLOAD'
-				});
-				//ga('send', 'event', 'DOCUMENT_DOWNLOAD', event.data.fileName, 'download document');
-				break;
-			case 'TEXT_COPY':
-			    gtag('event', 'TEXT_COPY', {
-				  'event_label': 'TEXT_COPY'
-				});
-				//ga('send', 'event', 'TEXT_COPY', `${event.data.copiedText} of ${event.data.fileName}`, 'text copy');
-				break;
-		}
-	}, {
-            enablePDFAnalytics: true
-        });
+	
+	setFileToPreview(adobeDCView, viewerConfig);
+	trackPdfEvents(adobeDCView);
+	
 	adobeDCView.registerCallback(
 		AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
 		function () {
@@ -78,28 +87,66 @@ document.addEventListener("adobe_dc_view_sdk.ready", function () {
 				})
 			})
 		});
-		
-});
+};
 
-function listenForFileUpload(adobeDCView) {
-	var fileToRead = document.getElementById("file-picker");
-	fileToRead.addEventListener("change", function (event) {
-		var files = fileToRead.files;
-		if (files.length > 0) {
-			var reader = new FileReader();
-			reader.onloadend = function (e) {
-				var filePromise = Promise.resolve(e.target.result);
-				adobeDCView.previewFile({
-					content: {
-						promise: filePromise
-					},
-					metaData: {
-						fileName: files[0].name
-					}
-				}, viewerConfig)
-			};
-			reader.readAsArrayBuffer(files[0]);
+function trackPdfEvents(adobeDCView) {
+	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
+		switch (event.type) {
+			case "DOCUMENT_OPEN":
+				gtag('event', 'DOCUMENT_OPEN', {
+					'event_label': 'DOCUMENT_OPEN'
+				});
+				break;
+			case 'PAGE_VIEW':
+				gtag('event', 'PAGE_VIEW', {
+					'event_label': 'PAGE_VIEW'
+				});
+				break;
+			case 'DOCUMENT_DOWNLOAD':
+				gtag('event', 'DOCUMENT_DOWNLOAD', {
+					'event_label': 'DOCUMENT_DOWNLOAD'
+				});
+				break;
+			case 'TEXT_COPY':
+				gtag('event', 'TEXT_COPY', {
+					'event_label': 'TEXT_COPY'
+				});
+				break;
 		}
-	}, false);
+	}, {
+		enablePDFAnalytics: true
+	});
+}
+
+/** To validate pdf file */
+function isValidPDF(file) {
+	if (file.type === "application/pdf") {
+		return true;
+	}
+	if (file.type === "" && file.name) {
+		var fileName = file.name;
+		var lastDotIndex = fileName.lastIndexOf(".");
+		return !(lastDotIndex === -1 || fileName.substr(lastDotIndex).toUpperCase() !== "PDF");
+	}
+	return false;
+}
+
+/** To set file preview */
+function setFileToPreview(adobeDCView, viewerConfig) {
+	if (files.length > 0 && isValidPDF(files[0])) {
+		var reader = new FileReader();
+		reader.onloadend = function (e) {
+			var filePromise = Promise.resolve(e.target.result);
+			adobeDCView.previewFile({
+				content: {
+					promise: filePromise
+				},
+				metaData: {
+					fileName: files[0].name
+				}
+			}, viewerConfig)
+		};
+		reader.readAsArrayBuffer(files[0]);
+	}
 }
 

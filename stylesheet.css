@@ -1,0 +1,31 @@
+body {
+	height: 100%;
+}
+
+.hidden {
+	display:none;
+}
+
+.custom-btn {
+	border-radius: 0 !important;
+	width: 180px;
+	height: 50px;
+	margin-top: 28px;
+}
+
+.success-color {
+	color: green;
+}
+
+#adobe-dc-sized-container {
+	margin-left: 25%;
+	height: 476px; 
+	width: 600px; 
+	border: 1px solid #dadada;
+}
+
+#adobe-dc-in-line {
+	margin-left: 20%;
+	width: 800px; 
+	box-shadow: 1px 1px 10px 1px #dadada;
+}
