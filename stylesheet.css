@@ -18,14 +18,12 @@ body {
 }
 
 #adobe-dc-sized-container {
-	margin-left: 25%;
 	height: 476px; 
 	width: 600px; 
 	border: 1px solid #dadada;
 }
 
 #adobe-dc-in-line {
-	margin-left: 20%;
 	width: 800px; 
 	box-shadow: 1px 1px 10px 1px #dadada;
 }

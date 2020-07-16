@@ -11,7 +11,7 @@
    <body>
       <div class="container-fluid">
          <div class="row" style="padding:7px">
-            <div class="col col-md-3">
+            <div class="col col-xs-12 col-sm-6 col-md-3">
                <p id="upload-pdf-p">Upload PDF created using Services SDK
                <p>
                <div class="input-group">
@@ -21,24 +21,24 @@
                   <div class="custom-file">
                      <input type="file" class="custom-file-input" id="file-picker" accept="application/pdf"
                         aria-describedby="inputGroupFileAddon01">
-                     <label class="custom-file-label" for="file-picker">Upload file...</label>
+                     <label class="custom-file-label" for="file-picker">Browse...</label>
                   </div>
                </div>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-xs-12 col-sm-6 col-md-3">
                <button type="button" class="btn btn-dark btn-md custom-btn disabled" id="full-window-btn">FULL WINDOW</button>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-xs-12 col-sm-6 col-md-3">
                <button type="button" class="btn btn-dark btn-md custom-btn disabled" id="sized-container-btn">SIZED CONTAINER</button>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-xs-12 col-sm-6 col-md-3">
                <button type="button" class="btn btn-dark btn-md custom-btn disabled" id="in-line-btn">IN LINE</button>
             </div>
          </div>
-         <div class="row" style="height:86vh">
-            <div class="hidden" id="adobe-dc-full-window"></div>
-            <div class="hidden" id="adobe-dc-sized-container"></div>
-            <div class="hidden" id="adobe-dc-in-line"></div>
+         <div class="row justify-content-center" style="height:86vh">
+            <div class="col col-xs-12 hidden" id="adobe-dc-full-window"></div>
+            <div class="col col-md-6 text-center hidden" id="adobe-dc-sized-container"></div>
+            <div class="col col-md-6 hidden" id="adobe-dc-in-line"></div>
          </div>
       </div>
       <!-- Global site tag (gtag.js) - Google Analytics -->
