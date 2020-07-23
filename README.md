@@ -14,6 +14,6 @@
 
 ## Execute
 
-* Run using any local server by replacing with your own clientid(CLIENT_ID in index.js)
+* Run using any server/host that serves static content by replacing with your own clientid(CLIENT_ID in index.js)
 * Set your tracking id in index.html in https://www.googletagmanager.com/gtag/js?id=<YOUR_TRACKING_ID> and gtag('config', '<YOUR_TRACKING_ID>');to track events using Google analytics 
 
