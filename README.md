@@ -1,4 +1,4 @@
-#### Embed a PDF viewer in a web application by Emded API
+# Embed a PDF viewer in a web application by Emded API
 
 ## Useful links
 
@@ -6,7 +6,7 @@
 * Running application link: https://pawan1773.github.io/pdf-viewer/
 * Git repository link: https://github.com/pawan1773/pdf-viewer
 
-# Files
+## Files
 
 * index.html
 * index.js
