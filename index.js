@@ -13,8 +13,11 @@ var fileToRead = document.getElementById("file-picker");
 var files = '';
 fileToRead.addEventListener("change", function (event) {
 	files = fileToRead.files;
-	$('#upload-pdf-p').text('PDF uploaded. Please select desired view.').addClass('success-color');
+	$('#upload-pdf-p').text('PDF uploaded. Try with different views.').addClass('success-color');
 	$('.btn').removeClass('disabled');
+	displayPdfInFullWindowView();
+	$('#adobe-dc-full-window').show();
+	$('#adobe-dc-full-window').siblings().hide();
 });
 
 /** To view PDF in FULL WINDOW view */
