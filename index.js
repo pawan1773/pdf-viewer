@@ -94,12 +94,12 @@ function trackPdfEvents(adobeDCView) {
 	adobeDCView.registerCallback(AdobeDC.View.Enum.CallbackType.EVENT_LISTENER, function (event) {
 		switch (event.type) {
 			case "DOCUMENT_OPEN":
-				gtag('event', 'DOCUMENT_OPEN', {
+				gtag('event', e.data.fileName + ' opened.', {
 					'event_label': 'DOCUMENT_OPEN'
 				});
 				break;
 			case 'PAGE_VIEW':
-				gtag('event', 'PAGE_VIEW', {
+				gtag('event', e.data.pageNumber + ' of ' + e.data.fileName + ' viewed.', {
 					'event_label': 'PAGE_VIEW'
 				});
 				break;
